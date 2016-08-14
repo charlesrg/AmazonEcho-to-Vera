@@ -194,7 +194,9 @@ function handleDiscovery(event, context) {
         header: headers,
         payload: payloads
     };
-
+    
+    #Check Cloudwatch logs, should show a list of all devices.
+    console.log('Info', 'Follow discovery output: \n' + JSON.stringify(result, null, 4) );
     context.succeed(result);
 
 
