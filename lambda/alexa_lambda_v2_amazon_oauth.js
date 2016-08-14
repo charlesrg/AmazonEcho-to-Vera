@@ -7,8 +7,8 @@
     or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 */
 
-var username="{enter your username}";
-var password="{enter your encoded password}";
+var username="alexa_echo_dot";
+var password="45c6cc527406640e46cd867fb5d43add924aade4";
 var PK_Device="";  // if you want to use a specific device, enter it's device ID here
 
 var https = require('https');
@@ -22,6 +22,7 @@ var Server_Device="";
  * Incoming events from Alexa Lighting APIs are processed via this method.
  */
 exports.handler = function(event, context) {
+    log('Info', 'call to namespace: ' + event.header.namespace );
     switch (event.header.namespace) {
 
         case 'Alexa.ConnectedHome.Discovery':
@@ -85,9 +86,11 @@ function handleDiscovery(event, context) {
         namespace: 'Alexa.ConnectedHome.Discovery',
         name: 'DiscoverAppliancesResponse',
         payloadVersion: '2',
-        messageId: generateUUID()
+        //The following output variable also breaks Alexa parsing.
+        //messageId: generateUUID()
     };
 
+	
     var accessToken = event.payload.accessToken.trim();
 
     var appliances = [];
@@ -99,6 +102,7 @@ function handleDiscovery(event, context) {
           var allScenes=Status.scenes;
           deviceLoop:
           for(var i = 0; i < allDevices.length; i++) {
+		  //for(var i = 1; i < 10; i++) {
             var device = allDevices[i];
 
             if(device.name.indexOf("_")!==0){
@@ -158,14 +162,15 @@ function handleDiscovery(event, context) {
             friendlyDescription: deviceCategory+" "+device.name+" in "+roomName,
             isReachable: true,
             "actions":actions,
-            additionalApplianceDetails: {}
+            additionalApplianceDetails: { } 
             };
             appliances.push(applianceDiscovered);
             }
 
           }
-
-        for(var k = 0; k < allScenes.length; k++) {
+	//Skip Scene processing for now. Alexa is having a hard time dealing with it.
+        //for(var k = 0; k < allScenes.length; k++) {
+		for(var k = 0; k < 0; k++) {
             var scene = allScenes[k];
             if(scene.name.indexOf("_")!==0){
 
@@ -194,11 +199,9 @@ function handleDiscovery(event, context) {
         header: headers,
         payload: payloads
     };
-    
-    #Check Cloudwatch logs, should show a list of all devices.
-    console.log('Info', 'Follow discovery output: \n' + JSON.stringify(result, null, 4) );
-    context.succeed(result);
 
+    context.succeed(result);
+    console.log('Info', 'Follow discovery output: \n' + JSON.stringify(result, null, 4) );
 
         });
     });
