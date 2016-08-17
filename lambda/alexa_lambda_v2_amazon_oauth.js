@@ -7,8 +7,8 @@
     or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 */
 
-var username="alexa_echo_dot";
-var password="45c6cc527406640e46cd867fb5d43add924aade4";
+var username="ohhhmy";
+var password="ohhhmy_nothere";
 var PK_Device="";  // if you want to use a specific device, enter it's device ID here
 
 var https = require('https');
