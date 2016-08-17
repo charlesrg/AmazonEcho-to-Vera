@@ -168,8 +168,7 @@ function handleDiscovery(event, context) {
             }
 
           }
-	//Skip Scene processing for now. Alexa is having a hard time dealing with it.
-        //for(var k = 0; k < allScenes.length; k++) {
+        for(var k = 0; k < allScenes.length; k++) {
 		for(var k = 0; k < 0; k++) {
             var scene = allScenes[k];
             if(scene.name.indexOf("_")!==0){
@@ -180,6 +179,7 @@ function handleDiscovery(event, context) {
             version: "1",
             applianceId: "S"+scene.id.toString(),
             friendlyName: scene.name + " Scene",
+            friendlyDescription: deviceCategory+" "+device.name+" in "+roomName,
             isReachable: true,
             actions:["turnOff", "turnOn"],
             additionalApplianceDetails: {}
